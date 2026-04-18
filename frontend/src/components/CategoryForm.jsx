@@ -24,15 +24,15 @@ export default function CategoryForm({ onCreated }) {
     <form onSubmit={handleSubmit} className="flex gap-2">
       <input
         type="text"
-        placeholder="Нова категорія"
+        placeholder="Назва категорії"
         value={name}
         onChange={(e) => setName(e.target.value)}
-        className="border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400 flex-1"
+        className="flex-1 bg-slate-800 border border-slate-700 text-white rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500/50 transition-all placeholder-slate-500"
       />
       <button
         type="submit"
         disabled={loading}
-        className="bg-indigo-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-indigo-700 transition disabled:opacity-50"
+        className="bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500 text-white px-4 py-2.5 rounded-xl text-sm font-medium transition-all disabled:opacity-50"
       >
         + Додати
       </button>

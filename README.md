@@ -1,4 +1,4 @@
-# 💰 Expense Tracker
+# 💰 FinFlow
 
 A fullstack web application for tracking personal expenses with analytics and category management.
 

@@ -1,18 +1,9 @@
 import {
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  ResponsiveContainer,
-  PieChart,
-  Pie,
-  Cell,
-  Legend,
+  BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip,
+  ResponsiveContainer, PieChart, Pie, Cell, Legend,
 } from 'recharts'
 
-const COLORS = ['#6366f1', '#22c55e', '#f59e0b', '#ef4444', '#3b82f6', '#ec4899', '#14b8a6']
+const COLORS = ['#3b82f6', '#06b6d4', '#8b5cf6', '#10b981', '#f59e0b', '#ef4444', '#ec4899']
 
 function getMonthlyData(expenses) {
   const map = {}
@@ -41,10 +32,20 @@ function getCategoryData(expenses) {
   }))
 }
 
+const darkTooltip = {
+  contentStyle: {
+    backgroundColor: '#1e293b',
+    border: '1px solid #334155',
+    borderRadius: '12px',
+    fontSize: '13px',
+    color: '#e2e8f0',
+  },
+}
+
 export default function ExpenseCharts({ expenses }) {
   if (expenses.length === 0) {
     return (
-      <p className="text-center text-gray-400 py-8">
+      <p className="text-center text-slate-500 py-8">
         Додайте витрати щоб побачити графіки 📊
       </p>
     )
@@ -55,27 +56,30 @@ export default function ExpenseCharts({ expenses }) {
 
   return (
     <div className="space-y-8">
-      {/* Bar chart — по місяцях */}
       <div>
-        <h3 className="text-sm font-medium text-gray-500 mb-3">Витрати по місяцях</h3>
+        <h3 className="text-slate-400 text-xs font-medium uppercase tracking-wider mb-4">
+          Витрати по місяцях
+        </h3>
         <ResponsiveContainer width="100%" height={220}>
           <BarChart data={monthlyData} margin={{ top: 5, right: 10, left: 0, bottom: 5 }}>
-            <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
-            <XAxis dataKey="label" tick={{ fontSize: 12 }} />
-            <YAxis tick={{ fontSize: 12 }} />
-            <Tooltip
-              formatter={(value) => [`₴${value}`, 'Сума']}
-              contentStyle={{ borderRadius: '8px', fontSize: '13px' }}
-            />
-            <Bar dataKey="total" fill="#6366f1" radius={[6, 6, 0, 0]} />
+            <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" />
+            <XAxis dataKey="label" tick={{ fontSize: 12, fill: '#94a3b8' }} axisLine={false} />
+            <YAxis tick={{ fontSize: 12, fill: '#94a3b8' }} axisLine={false} />
+            <Tooltip {...darkTooltip} formatter={(v) => [`₴${v}`, 'Сума']} />
+            <Bar dataKey="total" radius={[8, 8, 0, 0]}>
+              {monthlyData.map((_, i) => (
+                <Cell key={i} fill={i % 2 === 0 ? '#3b82f6' : '#06b6d4'} />
+              ))}
+            </Bar>
           </BarChart>
         </ResponsiveContainer>
       </div>
 
-      {/* Pie chart — по категоріях */}
       <div>
-        <h3 className="text-sm font-medium text-gray-500 mb-3">Витрати по категоріях</h3>
-        <ResponsiveContainer width="100%" height={250}>
+        <h3 className="text-slate-400 text-xs font-medium uppercase tracking-wider mb-4">
+          Витрати по категоріях
+        </h3>
+        <ResponsiveContainer width="100%" height={260}>
           <PieChart>
             <Pie
               data={categoryData}
@@ -84,20 +88,19 @@ export default function ExpenseCharts({ expenses }) {
               cx="50%"
               cy="50%"
               outerRadius={90}
-              label={({ name, percent }) =>
-                `${name} ${(percent * 100).toFixed(0)}%`
-              }
-              labelLine={false}
+              innerRadius={40}
+              paddingAngle={3}
             >
               {categoryData.map((_, index) => (
                 <Cell key={index} fill={COLORS[index % COLORS.length]} />
               ))}
             </Pie>
-            <Tooltip
-              formatter={(value) => [`₴${value}`, 'Сума']}
-              contentStyle={{ borderRadius: '8px', fontSize: '13px' }}
+            <Tooltip {...darkTooltip} formatter={(v) => [`₴${v}`, 'Сума']} />
+            <Legend
+              formatter={(value) => (
+                <span style={{ color: '#94a3b8', fontSize: '12px' }}>{value}</span>
+              )}
             />
-            <Legend />
           </PieChart>
         </ResponsiveContainer>
       </div>

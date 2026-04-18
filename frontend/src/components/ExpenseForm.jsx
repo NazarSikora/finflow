@@ -8,6 +8,8 @@ export default function ExpenseForm({ categories, onCreated }) {
   const [date, setDate] = useState('')
   const [loading, setLoading] = useState(false)
 
+  const inputClass = "bg-slate-800 border border-slate-700 text-white rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500/50 transition-all placeholder-slate-500 w-full"
+
   const handleSubmit = async (e) => {
     e.preventDefault()
     if (!title.trim() || !amount) return
@@ -38,7 +40,7 @@ export default function ExpenseForm({ categories, onCreated }) {
         placeholder="Назва витрати"
         value={title}
         onChange={(e) => setTitle(e.target.value)}
-        className="border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
+        className={inputClass}
         required
       />
       <input
@@ -46,7 +48,7 @@ export default function ExpenseForm({ categories, onCreated }) {
         placeholder="Сума (₴)"
         value={amount}
         onChange={(e) => setAmount(e.target.value)}
-        className="border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
+        className={inputClass}
         required
         min="0"
         step="0.01"
@@ -54,25 +56,23 @@ export default function ExpenseForm({ categories, onCreated }) {
       <select
         value={categoryId}
         onChange={(e) => setCategoryId(e.target.value)}
-        className="border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
+        className={inputClass}
       >
         <option value="">Без категорії</option>
         {categories.map((cat) => (
-          <option key={cat.id} value={cat.id}>
-            {cat.name}
-          </option>
+          <option key={cat.id} value={cat.id}>{cat.name}</option>
         ))}
       </select>
       <input
         type="date"
         value={date}
         onChange={(e) => setDate(e.target.value)}
-        className="border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
+        className={inputClass}
       />
       <button
         type="submit"
         disabled={loading}
-        className="sm:col-span-2 bg-green-600 text-white py-2 rounded-lg text-sm hover:bg-green-700 transition disabled:opacity-50 font-medium"
+        className="sm:col-span-2 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500 text-white py-2.5 rounded-xl text-sm font-medium transition-all disabled:opacity-50"
       >
         {loading ? 'Збереження...' : '+ Додати витрату'}
       </button>

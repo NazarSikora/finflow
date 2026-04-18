@@ -3,7 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.routers import auth, categories, expenses
 from app.database import engine, Base
 
-app = FastAPI(title="Expense Tracker API")
+app = FastAPI(title="FinFlow API")
 
 app.add_middleware(
     CORSMiddleware,
